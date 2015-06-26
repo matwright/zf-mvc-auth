@@ -14,6 +14,7 @@ use ZF\MvcAuth\Authentication\DefaultAuthenticationListener;
 use OAuth2\Server as OAuth2Server;
 use OAuth2\GrantType\ClientCredentials;
 use OAuth2\GrantType\AuthorizationCode;
+use ZF\OAuth2\Factory\OAuth2ServerInstanceFactory;
 
 /**
  * Factory for creating the DefaultAuthenticationListener from configuration
@@ -34,6 +35,9 @@ class DefaultAuthenticationListenerFactory implements FactoryInterface
         }
 
         $oauth2Server = $this->createOAuth2Server($services);
+        if($oauth2Server instanceof OAuth2ServerInstanceFactory){
+            $oauth2Server=$oauth2Server();
+        }
         if ($oauth2Server) {
             $listener->setOauth2Server($oauth2Server);
         }
