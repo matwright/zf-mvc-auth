@@ -19,6 +19,7 @@ use ZF\MvcAuth\Authentication\DefaultAuthenticationListener;
 use ZF\MvcAuth\Authentication\HttpAdapter;
 use ZF\MvcAuth\Authentication\OAuth2Adapter;
 use ZF\OAuth2\Factory\OAuth2ServerFactory as ZFOAuth2ServerFactory;
+use ZF\OAuth2\Factory\OAuth2ServerInstanceFactory;
 
 /**
  * Factory for creating the DefaultAuthenticationListener from configuration
@@ -39,6 +40,9 @@ class DefaultAuthenticationListenerFactory implements FactoryInterface
         }
 
         $oauth2Server = $this->createOAuth2Server($services);
+        if($oauth2Server instanceof OAuth2ServerInstanceFactory){
+            $oauth2Server=$oauth2Server();
+        }
         if ($oauth2Server) {
             $listener->attach($oauth2Server);
         }
