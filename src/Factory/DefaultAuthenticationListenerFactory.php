@@ -93,7 +93,7 @@ class DefaultAuthenticationListenerFactory implements FactoryInterface
             if($oauth2Server instanceof OAuth2ServerInstanceFactory){
                 return $oauth2Server();
             }
-            return $services->get('ZF\OAuth2\Service\OAuth2Server');
+            return $oauth2Server;
         }
 
         // There is no preconfigured OAuth2 server, so we must construct our own
